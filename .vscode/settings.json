@@ -56,5 +56,5 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "New project.sln"
+    "dotnet.defaultSolution": "VamsurLike.sln"
 }
