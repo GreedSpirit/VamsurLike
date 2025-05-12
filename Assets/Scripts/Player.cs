@@ -3,8 +3,8 @@ using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField] Vector2 inputVec;
-    [SerializeField] float speed;
+    public Vector2 inputVec;
+    public float speed;
     SpriteRenderer spriteRenderer;
     Animator animator;
 
