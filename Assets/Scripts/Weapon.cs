@@ -20,21 +20,25 @@ public class Weapon : MonoBehaviour
 
     void Update()
     {
-        switch(id){
-            case 0 :
-            transform.Rotate(speed * Time.deltaTime * Vector3.back);
-            break;
+        if (!GameManager.instance.isLive) return;
+        
+        switch (id)
+        {
+            case 0:
+                transform.Rotate(speed * Time.deltaTime * Vector3.back);
+                break;
 
-            case 1 :
-            fireTimer += Time.deltaTime;
-            if(fireTimer > speed){
-                fireTimer = 0;
-                Fire();
-            }
-            break;
+            case 1:
+                fireTimer += Time.deltaTime;
+                if (fireTimer > speed)
+                {
+                    fireTimer = 0;
+                    Fire();
+                }
+                break;
 
-            default :
-            break;
+            default:
+                break;
         }
 
         if(Input.GetButtonDown("Jump")){ // Test Code

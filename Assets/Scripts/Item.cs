@@ -9,6 +9,8 @@ public class Item : MonoBehaviour
     public Gear gear;
     Image icon;
     Text textLevel;
+    Text textName;
+    Text textDesc;
 
     void Awake()
     {
@@ -17,11 +19,29 @@ public class Item : MonoBehaviour
 
         Text[] texts = GetComponentsInChildren<Text>();
         textLevel = texts[0];
+        textName = texts[1];
+        textDesc = texts[2];
+        textName.text = data.itemName;
     }
 
-    void LateUpdate()
+    private void OnEnable()
     {
         textLevel.text = "Lv." + (level + 1);
+
+        switch (data.itemtype)
+        {
+            case ItemData.Itemtype.Melee:
+            case ItemData.Itemtype.Range:
+                textDesc.text = string.Format(data.itemDesc, data.damages[level] * 100, data.counts[level]);
+                break;
+            case ItemData.Itemtype.Glove:
+            case ItemData.Itemtype.Shoe:
+                textDesc.text = string.Format(data.itemDesc, data.damages[level] * 100);
+                break;
+            default:
+                textDesc.text = string.Format(data.itemDesc);
+                break;
+        }
     }
 
     public void OnClick()
