@@ -1,4 +1,6 @@
+using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -7,13 +9,15 @@ public class GameManager : MonoBehaviour
     public Player player;
     public PoolManager poolManager;
     public LevelUp uiLevelUp;
+    public Result uiResult;
+    public GameObject enemyCleaner;
     [Header("# Game Control")]
     public float gameTime = 0;
     public float maxgameTime = 2 * 10f - 1;
-    public bool isLive = true;
+    public bool isLive = false;
     [Header("# Player Info")]
-    public int health;
-    public int maxHealth = 100;
+    public float health;
+    public float maxHealth = 100;
     public int level;
     public int kill;
     public int exp;
@@ -26,12 +30,32 @@ public class GameManager : MonoBehaviour
         instance = this;
     }
 
-    void Start()
+    public void GameStart()
     {
         health = maxHealth;
 
         //베이스 무기 임시 스크립트
         uiLevelUp.Select(0);
+        Resume();
+    }
+
+    public void GameOver()
+    {
+        StartCoroutine(GameOverRoutine());
+    }
+
+    IEnumerator GameOverRoutine()
+    {
+        isLive = false;
+        yield return new WaitForSeconds(0.5f);
+        uiResult.gameObject.SetActive(true);
+        uiResult.Lose();
+        Stop();
+    }
+
+    public void GameReStart()
+    {
+        SceneManager.LoadScene(0);
     }
 
     void Update()
@@ -42,11 +66,14 @@ public class GameManager : MonoBehaviour
         if (gameTime >= maxgameTime)
         {
             gameTime = maxgameTime;
+            GameVictory();
         }
     }
 
     public void GetExp()
     {
+        if (!isLive) return;
+        
         exp++;
 
         if (exp == nextExp[Mathf.Min(level, nextExp.Length - 1)])
@@ -67,5 +94,22 @@ public class GameManager : MonoBehaviour
     {
         isLive = true;
         Time.timeScale = 1;
+    }
+
+    public void GameVictory()
+    {
+        StartCoroutine(GameVictoryRoutine());
+    }
+
+    IEnumerator GameVictoryRoutine()
+    {
+        isLive = false;
+        enemyCleaner.SetActive(true);
+
+        yield return new WaitForSeconds(0.5f);
+
+        uiResult.gameObject.SetActive(true);
+        uiResult.Win();
+        Stop();
     }
 }

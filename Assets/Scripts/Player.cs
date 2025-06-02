@@ -28,16 +28,34 @@ public class Player : MonoBehaviour
         rigid.MovePosition(rigid.position + nextVec);
     }
 
-    void OnMove(InputValue value){
+    void OnMove(InputValue value)
+    {
         inputVec = value.Get<Vector2>();
     }
 
     void LateUpdate()
     {
         if (!GameManager.instance.isLive) return;
-        
+
         spriteRenderer.flipX = inputVec.x < 0;
         animator.SetFloat("Speed", inputVec.magnitude);
+    }
+
+    void OnCollisionStay2D(Collision2D collision)
+    {
+        if (!GameManager.instance.isLive) return;
+
+        GameManager.instance.health -= Time.deltaTime * 10;
+
+        if (GameManager.instance.health < 0)
+        {
+            for (int idx = 2; idx < transform.childCount; idx++)
+            {
+                transform.GetChild(idx).gameObject.SetActive(false);
+            }
+            animator.SetTrigger("Dead");
+            GameManager.instance.GameOver();
+        }
     }
 
 
