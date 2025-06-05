@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class Gear : MonoBehaviour
@@ -40,17 +41,19 @@ public class Gear : MonoBehaviour
     void RateUp()
     {
         Weapon[] weapons = transform.parent.GetComponentsInChildren<Weapon>();
-
+        
         foreach (Weapon weapon in weapons)
         {
             switch (weapon.id)
             {
                 case 0:
-                    weapon.speed = 150 + (150 * rate);
+                    float speed = 150 * Character.WeaponSpeed;
+                    weapon.speed = speed + (speed * rate);
                     break;
 
                 case 1:
-                    weapon.speed = 0.5f * (1f - rate);
+                    speed = 0.5f * Character.WeaponRate;
+                    weapon.speed = speed * (1f - rate);
                     break;
 
                 default:
@@ -61,7 +64,7 @@ public class Gear : MonoBehaviour
 
     void SpeedUp()
     {
-        float speed = 3;
+        float speed = 3 * Character.Speed;
         GameManager.instance.player.speed = speed + speed * rate;
     }
 }

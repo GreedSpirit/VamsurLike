@@ -68,8 +68,8 @@ public class Weapon : MonoBehaviour
 
         // Property Set
         id = data.itemId;
-        damage = data.baseDamage;
-        count = data.baseCount;
+        damage = data.baseDamage * Character.Damage;
+        count = data.baseCount + Character.Count;
 
         for (int idx = 0; idx < GameManager.instance.poolManager.prefabs.Length; idx++)
         {
@@ -83,12 +83,12 @@ public class Weapon : MonoBehaviour
         switch (id)
         {
             case 0:
-                speed = 150;
+                speed = 150 * Character.WeaponSpeed;
                 Place();
                 break;
 
             case 1:
-                speed = 0.3f;
+                speed = 0.3f * Character.WeaponRate;
                 break;
 
             default:
