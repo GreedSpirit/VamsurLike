@@ -37,9 +37,11 @@ public class GameManager : MonoBehaviour
         health = maxHealth;
 
         player.gameObject.SetActive(true);
-        //베이스 무기 임시 스크립트
         uiLevelUp.Select(playerId % 2); //현재 구현된 무기 갯수로 나누어서 오류 방지
         Resume();
+
+        AudioManager.instance.PlayBgm(true);
+        AudioManager.instance.PlaySfx(AudioManager.Sfx.Select);
     }
 
     public void GameOver()
@@ -50,10 +52,15 @@ public class GameManager : MonoBehaviour
     IEnumerator GameOverRoutine()
     {
         isLive = false;
+
         yield return new WaitForSeconds(0.5f);
+
         uiResult.gameObject.SetActive(true);
         uiResult.Lose();
         Stop();
+
+        AudioManager.instance.PlayBgm(false);
+        AudioManager.instance.PlaySfx(AudioManager.Sfx.Lose);        
     }
 
     public void GameReStart()
@@ -114,5 +121,8 @@ public class GameManager : MonoBehaviour
         uiResult.gameObject.SetActive(true);
         uiResult.Win();
         Stop();
+
+        AudioManager.instance.PlayBgm(false);
+        AudioManager.instance.PlaySfx(AudioManager.Sfx.Win);
     }
 }

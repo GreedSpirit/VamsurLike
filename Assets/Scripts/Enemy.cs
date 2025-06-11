@@ -69,13 +69,16 @@ public class Enemy : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other) {
         if(other.CompareTag("Bullet") && isLive){
             this.health -= other.GetComponent<Bullet>().damage;
-            
-            if(this.health > 0){
-                StartCoroutine(KnockBack());
+            StartCoroutine(KnockBack());
+
+            if (this.health > 0)
+            {
                 animator.SetTrigger("Hit");
+                AudioManager.instance.PlaySfx(AudioManager.Sfx.Hit);
 
             }
-            else{ //Dead
+            else
+            { //Dead
                 isLive = false;
                 rigid.simulated = false;
                 enemyCollider.enabled = false;
@@ -83,6 +86,9 @@ public class Enemy : MonoBehaviour
                 spriter.sortingOrder--;
                 GameManager.instance.kill++;
                 GameManager.instance.GetExp();
+
+                if(GameManager.instance.isLive)
+                    AudioManager.instance.PlaySfx(AudioManager.Sfx.Dead);
             }
         }
     }

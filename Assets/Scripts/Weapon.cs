@@ -128,8 +128,9 @@ public class Weapon : MonoBehaviour
         
     }
 
-    void Fire(){
-        if(!player.scanner.nearestTarget) return;
+    void Fire()
+    {
+        if (!player.scanner.nearestTarget) return;
 
         Vector3 targetPos = player.scanner.nearestTarget.position;
         Vector3 fireDir = targetPos - transform.position;
@@ -140,5 +141,7 @@ public class Weapon : MonoBehaviour
         bullet.rotation = Quaternion.FromToRotation(Vector3.up, fireDir);
 
         bullet.GetComponent<Bullet>().Init(damage, count, fireDir);
+        
+        AudioManager.instance.PlaySfx(AudioManager.Sfx.Range);
     }
 }
