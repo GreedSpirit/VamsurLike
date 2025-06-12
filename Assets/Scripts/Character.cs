@@ -30,7 +30,7 @@ public class Character : MonoBehaviour
     {
         get
         {
-            return GameManager.instance.playerId == 2 ? 1.1f : 1f;
+            return GameManager.instance.playerId == 2 ? 1.2f : 1f;
         }
     }
 

@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Reposition : MonoBehaviour
@@ -42,9 +43,11 @@ public class Reposition : MonoBehaviour
             break;
 
             case "Enemy" :
-                if(col.enabled){
-                    Vector2 playerdir = GameManager.instance.player.inputVec;
-                    transform.Translate(playerdir * tileSize + new Vector2(Random.Range(-3f, 3f), Random.Range(-3f, 3f)));
+                if (col.enabled)
+                {
+                    Vector3 dist = playerPos - thisPos;
+                    Vector3 ran = new Vector3(Random.Range(-3, 3), Random.Range(-3, 3), 0);
+                    transform.Translate(ran + dist * 2);
                 }
             break;
         }

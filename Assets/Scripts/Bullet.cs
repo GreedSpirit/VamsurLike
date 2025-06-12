@@ -11,20 +11,30 @@ public class Bullet : MonoBehaviour
         rigid = GetComponent<Rigidbody2D>();
     }
 
-    public void Init(float damage, float per, Vector3 dir){
+    public void Init(float damage, float per, Vector3 dir)
+    {
         this.damage = damage;
         this.per = per;
 
-        if(per > -1) rigid.linearVelocity = dir * 15f;
+        if (per >= 0) rigid.linearVelocity = dir * 15f;
     }
 
-    void OnTriggerEnter2D(Collider2D other) {
-        if(!other.CompareTag("Enemy") || per == -1) return;
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (!other.CompareTag("Enemy") || per == -100) return;
 
         per--;
-        if(per == -1){
+        if (per < 0)
+        {
             rigid.linearVelocity = Vector3.zero;
             gameObject.SetActive(false);
         }
+    }
+
+    void OnTriggerExit2D(Collider2D collision)
+    {
+        if (!collision.CompareTag("Area") || per == -100) return;
+
+        gameObject.SetActive(false);
     }
 }

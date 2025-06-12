@@ -8,7 +8,7 @@ public class LevelUp : MonoBehaviour
     void Awake()
     {
         rect = GetComponent<RectTransform>();
-        items = GetComponentsInChildren<Item>();
+        items = GetComponentsInChildren<Item>(true);
     }
 
     public void Show()

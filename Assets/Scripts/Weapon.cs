@@ -123,7 +123,7 @@ public class Weapon : MonoBehaviour
             bulletTransform.Rotate(rotateVec);
             bulletTransform.Translate(Vector3.up * 1.5f, Space.Self);
 
-            bulletTransform.GetComponent<Bullet>().Init(damage, -1, Vector3.zero); // -1 is Inf Per.
+            bulletTransform.GetComponent<Bullet>().Init(damage, -100, Vector3.zero); // -100 is Inf Per.
         }
         
     }

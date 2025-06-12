@@ -20,9 +20,11 @@ public class PoolManager : MonoBehaviour
         GameObject select = null;
 
         foreach(GameObject obj in pools[index]){
-            if(!obj.activeSelf){
+            if (!obj.activeSelf)
+            {
                 select = obj;
                 select.SetActive(true);
+                break;
             }
         }
 
